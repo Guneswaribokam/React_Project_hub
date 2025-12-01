@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Global / Utility tweaks --- */
+:root{
+  --accent-1: #6c5ce7;
+  --accent-2: #a29bfe;
+  --bg-dark: #bbb0b0d6;
+  --glass-bg: rgba(255, 255, 255, 0.742);
+  --glass-border: rgba(255, 255, 255, 0.576);
+  --glass-blur: 8px;
+  --card-shadow: 0 8px 30px rgba(210, 211, 217, 0.779);
+  --radius-pill: 100px;
+}
+
+*{
+  box-sizing: border-box;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* keep scrollbar hidden as you had */
+::-webkit-scrollbar { display: none; }
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* --- Background / Home --- */
+.home {
+  min-height: 100vh;
+  background-color: var(--bg-dark);
+  /* layered, softer repeating gradients to add subtle grid + noise */
+  background-image:
+    radial-gradient(rgba(194, 189, 189, 0.82) 0.5px, transparent 0.5px),
+    repeating-linear-gradient(94deg, rgba(219, 218, 224, 0.839) 0px, rgba(221, 219, 230, 0.818) 1px, transparent 1px, transparent 60px),
+    repeating-linear-gradient(4deg, rgba(166, 158, 229, 0.754) 0px, rgba(164, 159, 202, 0.712) 1px, transparent 1px, transparent 60px),
+    linear-gradient(94deg, #9696d0c6, #b9aeaec8 60%);
+  background-size: auto, auto, auto, cover;
+  background-attachment: fixed;
+  color: #e9e9ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  position: relative;
+}
+
+/* optional subtle vignette to focus center */
+.home::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.45) 100%);
+  mix-blend-mode: multiply;
+}
+
+/* --- Reusable glass card (use .glass where you need cards) --- */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--card-shadow);
+  border-radius: 16px;
+  padding: 1.25rem;
+  color: inherit;
+  transition: transform 180ms cubic-bezier(.2,.9,.3,1), box-shadow 180ms;
+}
+.glass:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(2,6,23,0.65);
+}
+
+/* --- Custom primary button (kept your class name) --- */
+.custom-button {
+  display: inline-block;
+  border: none;
+  outline: none;
+  background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+  padding: 10px 22px;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  font-weight: 800;
+  color: #fff;
+  border-radius: var(--radius-pill);
+  transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+  box-shadow: 0 8px 0 0 rgba(162,155,254,0.7);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* hover / focus / active */
+.custom-button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.03);
+  box-shadow: 0 14px 28px rgba(108,92,231,0.18);
+}
+.custom-button:focus {
+  outline: 3px solid rgba(108,92,231,0.22);
+  outline-offset: 3px;
+  box-shadow: 0 12px 30px rgba(108,92,231,0.14);
+}
+.custom-button:active {
+  transform: translateY(2px) scale(0.998);
+  box-shadow: 0 4px 0 0 rgba(162,155,254,0.7);
+}
+
+/* small variant */
+.custom-button.small {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 rgba(162,155,254,0.6);
+}
+
+/* disabled */
+.custom-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  filter: grayscale(0.2);
+}
+
+/* --- Gradient background helper (your bwgradient) --- */
+.bwgradient {
+  background: linear-gradient(81deg, rgba(8,7,7,0.85) 4%, rgba(0,0,0,0.80) 56%);
+  color: #f3f3f5;
+}
+
+/* --- Input / Focus helper (kept your class) --- */
+.custom-focus:focus {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(108,92,231,0.16);
+  border-radius: 8px;
+  border: 1px solid rgba(108,92,231,0.22);
+}
+
+/* --- Small UI helpers --- */
+.kicker {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.65);
+}
+
+/* headings left untouched as requested — small spacing helper */
+.header-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* subtle fade-in for contents */
+.fade-in {
+  animation: fadeInUp 520ms cubic-bezier(.2,.9,.3,1) both;
+}
+@keyframes fadeInUp {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* responsive layout helpers */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* small card grid */
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(1, minmax(0,1fr));
+}
+@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* subtle utility tweaks for lists and meta */
+.meta {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+}
+
+/* tag pill */
+.pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.9);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* ensure form elements look consistent */
+input, textarea, select, button {
+  font-family: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: .6rem .75rem;
+  border-radius: 8px;
+}
+
+/* small accessibility note area */
+.note {
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+}
+
+/* final small polish: link hover */
+a {
+  color: var(--accent-1);
+  text-decoration: none;
+  transition: color 160ms ease, transform 160ms ease;
+}
+a:hover { color: var(--accent-2); transform: translateY(-1px); }
+.react-hub-title {
+   @apply text-4xl sm:text-5xl md:text-6xl text-center font-bold mb-8 
+         inline-block text-transparent bg-clip-text 
+         bg-gradient-to-r from-[#E0E6F5] via-[#AFC2E8] to-[#86A8D9];
+
+  /* Premium Glow */
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.65),
+    0 0 20px rgba(173, 216, 230, 0.55),
+    0 0 35px rgba(135, 206, 250, 0.45);
+
+  /* Smooth breathing animation */
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(255, 255, 255, 0.7),
+      0 0 22px rgba(173, 216, 230, 0.55),
+      0 0 40px rgba(135, 206, 250, 0.5);
+    filter: brightness(1);
+  }
+
+  50% {
+    text-shadow:
+      0 0 16px rgba(255, 255, 255, 0.9),
+      0 0 30px rgba(173, 216, 230, 0.75),
+      0 0 55px rgba(135, 206, 250, 0.65);
+    filter: brightness(1.22);
+  }
+}
